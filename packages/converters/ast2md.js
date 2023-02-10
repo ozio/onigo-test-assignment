@@ -41,13 +41,13 @@ export const ast2md = (ast) => {
     } else if (node.type === 'HorizontalLine') {
       md += '***\n'
     } else if (node.type === 'UnorderedList') {
-      node.children.forEach((item, idx, list) => {
+      node.children.forEach((item) => {
         md += `${'  '.repeat(depth - 1)}- `
         processNode(item, depth + 1)
         md += '\n'
       })
     } else if (node.type === 'OrderedList') {
-      node.children.forEach((item, idx, list) => {
+      node.children.forEach((item, idx) => {
         md += `${'  '.repeat(depth - 1)}${idx + 1}. `
         processNode(item, depth + 1)
         md += '\n'
