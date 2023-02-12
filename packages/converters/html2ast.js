@@ -71,6 +71,8 @@ export const html2ast = (rawHTML) => {
 
         if (!selfClosingTags.includes(tag)) {
           currentNode = newNode
+        } else {
+          delete newNode.children
         }
       }
 

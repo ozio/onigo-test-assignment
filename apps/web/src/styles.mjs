@@ -1,11 +1,7 @@
-import * as constants from 'theme'
+import { colors } from 'ui/theme'
 
-const constToKebab = (string) => {
-  return string
-    .toLowerCase()
-    .replaceAll('_', '-')
-}
+const kebabize = (str) => str.replace(/[A-Z]+(?![a-z])|[A-Z]/g, ($, ofs) => (ofs ? '-' : '') + $.toLowerCase())
 
-for (const constant in constants) {
-  document.documentElement.style.setProperty('--' + constToKebab(constant), constants[constant])
+for (const constant of Object.keys(colors)) {
+  document.documentElement.style.setProperty('--color-' + kebabize(constant), colors[constant])
 }

@@ -1,5 +1,5 @@
 import { Text, Pressable, StyleSheet } from 'react-native'
-import { FONT_COLOR, LIGHT_BORDER_COLOR, SHADOW_BORDER_COLOR, WINDOW_BACKGROUND } from 'theme'
+import { colors } from 'ui/theme'
 
 export const Button = ({ title, onPress, children }) => {
   return (
@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
   button: ({ pressed }) => ({
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: WINDOW_BACKGROUND,
+    backgroundColor: colors.windowBg,
     height: 35,
     width: 35,
     borderWidth: 2,
-    borderLeftColor: pressed ? SHADOW_BORDER_COLOR : LIGHT_BORDER_COLOR,
-    borderTopColor: pressed ? SHADOW_BORDER_COLOR : LIGHT_BORDER_COLOR,
-    borderRightColor: pressed ? LIGHT_BORDER_COLOR : SHADOW_BORDER_COLOR,
-    borderBottomColor: pressed ? LIGHT_BORDER_COLOR : SHADOW_BORDER_COLOR,
+    borderLeftColor: pressed ? colors.borderDark : colors.borderLight,
+    borderTopColor: pressed ? colors.borderDark : colors.borderLight,
+    borderRightColor: pressed ? colors.borderLight : colors.borderDark,
+    borderBottomColor: pressed ? colors.borderLight : colors.borderDark,
     paddingTop: pressed ? 2 : 0,
     paddingLeft: pressed ? 2 : 0,
   }),
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 21,
     letterSpacing: 0.25,
-    color: FONT_COLOR,
+    color: colors.font,
   },
 })

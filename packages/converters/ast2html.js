@@ -30,10 +30,9 @@ export const ast2html = (node) => {
     return html
   }
 
-  let slash = (!node.children || node.children.length === 0) ? '/' : ''
   let tag = tagByType[node.type]
 
-  let html = `<${tag}${slash}>`
+  let html = `<${tag}>`
 
   if (node.children) {
     node.children.forEach(child => {

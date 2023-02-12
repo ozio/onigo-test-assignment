@@ -14,6 +14,11 @@
   let markdown = welcomeMessage
 
   const emit = (name) => {
+    if (name === 'copy') {
+      navigator.clipboard.writeText(markdown)
+      return
+    }
+
     iframe.contentWindow.postMessage(JSON.stringify({ type: 'action', value: name }))
   }
 

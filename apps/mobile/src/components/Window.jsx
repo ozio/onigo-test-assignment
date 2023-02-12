@@ -1,11 +1,5 @@
 import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
-import {
-  WINDOW_BACKGROUND,
-  LIGHT_BORDER_COLOR,
-  SHADOW_BORDER_COLOR,
-  HEADER_BACKGROUND,
-  HEADER_FONT_COLOR,
-} from 'theme'
+import { colors } from 'ui/theme'
 import { Icon } from './Icon'
 
 export const Window = ({ title, children, style = {} }) => {
@@ -15,7 +9,7 @@ export const Window = ({ title, children, style = {} }) => {
     >
       <View style={{ ...styles.window, ...style }}>
         <View style={styles.heading}>
-          <Icon style={styles.icon} name="app" size={16} />
+          <Icon style={styles.icon} name="App" size={16} />
           <Text style={styles.title}>{title}</Text>
         </View>
         <View style={styles.body}>
@@ -30,22 +24,22 @@ const styles = StyleSheet.create({
   window: {
     borderWidth: 2,
     padding: 2,
-    backgroundColor: WINDOW_BACKGROUND,
-    borderLeftColor: LIGHT_BORDER_COLOR,
-    borderTopColor: LIGHT_BORDER_COLOR,
-    borderRightColor: SHADOW_BORDER_COLOR,
-    borderBottomColor: SHADOW_BORDER_COLOR,
+    backgroundColor: colors.windowBg,
+    borderLeftColor: colors.borderLight,
+    borderTopColor: colors.borderLight,
+    borderRightColor: colors.borderDark,
+    borderBottomColor: colors.borderDark,
   },
   heading: {
     padding: 1,
     height: 20,
-    backgroundColor: HEADER_BACKGROUND,
+    backgroundColor: colors.headerBg,
     marginBottom: 2,
     flexDirection: 'row',
   },
   icon: {},
   title: {
-    color: HEADER_FONT_COLOR,
+    color: colors.headerFont,
     lineHeight: 19,
     marginLeft: 2,
   },

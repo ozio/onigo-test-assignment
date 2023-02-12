@@ -7,8 +7,8 @@
     flex: 1;
     display: flex;
     border: 2px solid;
-    border-color: var(--shadow-border-color) var(--light-border-color) var(--light-border-color)
-    var(--shadow-border-color);
+    border-color: var(--color-border-dark) var(--color-border-light) var(--color-border-light)
+    var(--color-border-dark);
     background-color: white;
     position: relative;
   }

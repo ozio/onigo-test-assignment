@@ -1,7 +1,8 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { StyleSheet, TextInput, Platform, Dimensions } from 'react-native'
 import WebView from 'react-native-webview'
-import { EDITOR_BACKGROUND } from 'theme'
+import * as Clipboard from 'expo-clipboard';
+import { colors } from 'ui/theme'
 import { ast2html, ast2md, html2ast, md2ast } from 'converters'
 import { layout, title } from 'editor/config'
 import { Window } from './Window'
@@ -19,7 +20,7 @@ export const Editor = ({ welcomeMessage = '' }) => {
   const [markdown, setMarkdown] = useState('')
   const ref = useRef(null)
 
-  const handleReceiveMessage = (event) => {
+  const handleReceiveMessage = useCallback((event) => {
     const data = JSON.parse(event.nativeEvent.data)
 
     switch (data.type) {
@@ -32,23 +33,28 @@ export const Editor = ({ welcomeMessage = '' }) => {
         break
 
       case 'ready':
-        setHTML(welcomeMessage)
+        convertAndSend(welcomeMessage)
         break
     }
-  }
+  }, [])
 
-  const setHTML = (text) => {
+  const convertAndSend = useCallback((text) => {
     setMarkdown(text)
 
     const ast = md2ast(text)
     const html = ast2html(ast)
 
     ref.current.postMessage(JSON.stringify({ type: 'setHTML', value: html }))
-  }
+  }, [])
 
-  const action = (name) => {
+  const action = useCallback((name) => {
+    if (name === 'copy') {
+      Clipboard.setStringAsync(markdown)
+      return
+    }
+
     ref.current.postMessage(JSON.stringify({ type: 'action', value: name }))
-  }
+  }, [markdown])
 
   return (
     <Window
@@ -83,7 +89,7 @@ export const Editor = ({ welcomeMessage = '' }) => {
         <TextInput
           style={styles.input}
           value={markdown}
-          onChangeText={setHTML}
+          onChangeText={convertAndSend}
           multiline
         />
       </EditorContainer>
@@ -99,14 +105,13 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width - VIEW_MARGIN * 2,
     marginVertical: VIEW_MARGIN,
   },
-  toolbar: {},
   richEditor: {
     flex: 1,
-    backgroundColor: EDITOR_BACKGROUND,
+    backgroundColor: colors.editorBg,
   },
   markdownEditor: {
     flex: 1,
-    backgroundColor: EDITOR_BACKGROUND,
+    backgroundColor: colors.editorBg,
     marginTop: 3,
   },
   input: {
@@ -114,7 +119,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     flex: 1,
     fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'monospace',
-    backgroundColor: EDITOR_BACKGROUND,
+    backgroundColor: colors.editorBg,
     textAlignVertical: 'top',
     fontSize: 16,
   },

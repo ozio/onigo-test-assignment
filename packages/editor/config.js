@@ -20,13 +20,13 @@ _i@mr-ozio.ru_
 export const layout = [
   {
     type: 'button',
-    icon: 'bold',
+    icon: 'Bold',
     action: 'bold',
     label: null,
   },
   {
     type: 'button',
-    icon: 'italic',
+    icon: 'Italic',
     action: 'italic',
     label: null,
   },
@@ -38,7 +38,7 @@ export const layout = [
   },
   {
     type: 'button',
-    icon: 'paragraph',
+    icon: 'Paragraph',
     action: 'paragraph',
     label: null,
   },
@@ -61,12 +61,6 @@ export const layout = [
     label: 'H3',
   },
   {
-    type: 'button',
-    icon: null,
-    action: 'h4',
-    label: 'H4',
-  },
-  {
     type: 'separator',
     icon: null,
     action: null,
@@ -74,13 +68,13 @@ export const layout = [
   },
   {
     type: 'button',
-    icon: 'ul',
+    icon: 'UnorderedList',
     action: 'ul',
     label: null,
   },
   {
     type: 'button',
-    icon: 'ol',
+    icon: 'OrderedList',
     action: 'ol',
     label: null,
   },
@@ -88,6 +82,12 @@ export const layout = [
     type: 'separator',
     icon: null,
     action: null,
+    label: null,
+  },
+  {
+    type: 'button',
+    icon: 'Copy',
+    action: 'copy',
     label: null,
   },
 ]

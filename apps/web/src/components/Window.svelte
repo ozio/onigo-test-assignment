@@ -6,7 +6,7 @@
 
 <div class="window">
   <div class="window__header">
-    <Icon name="app" size="16" />
+    <Icon name="App" size="16" />
     {title}
   </div>
   <div class="window__body">
@@ -20,8 +20,8 @@
     flex-direction: column;
     border-style: solid;
     border-width: 2px;
-    border-color: var(--light-border-color) var(--shadow-border-color) var(--shadow-border-color) var(--light-border-color);
-    background-color: var(--window-background);
+    border-color: var(--color-border-light) var(--color-border-dark) var(--color-border-dark) var(--color-border-light);
+    background-color: var(--color-window-bg);
     position: absolute;
     width: var(--window-width);
     max-width: var(--window-max-width);
@@ -32,8 +32,8 @@
   }
 
   .window__header {
-    background-color: var(--header-background);
-    color: var(--header-font-color);
+    background-color: var(--color-header-bg);
+    color: var(--color-header-font);
     padding: 1px 3px;
     line-height: 20px;
     flex-shrink: 0;

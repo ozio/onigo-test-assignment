@@ -1,6 +1,0 @@
-{
-  "name": "theme",
-  "main": "constants.js",
-  "version": "1.0.0",
-  "type": "module"
-}

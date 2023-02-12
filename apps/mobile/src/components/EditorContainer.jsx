@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import { LIGHT_BORDER_COLOR, SHADOW_BORDER_COLOR } from 'theme'
+import { colors } from 'ui/theme'
 
 export const EditorContainer = ({ children, style = {} }) => {
   return (
@@ -17,9 +17,9 @@ export const EditorContainer = ({ children, style = {} }) => {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 2,
-    borderLeftColor: SHADOW_BORDER_COLOR,
-    borderTopColor: SHADOW_BORDER_COLOR,
-    borderRightColor: LIGHT_BORDER_COLOR,
-    borderBottomColor: LIGHT_BORDER_COLOR,
+    borderLeftColor: colors.borderDark,
+    borderTopColor: colors.borderDark,
+    borderRightColor: colors.borderLight,
+    borderBottomColor: colors.borderLight,
   },
 })

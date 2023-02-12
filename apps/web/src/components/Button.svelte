@@ -6,9 +6,9 @@
 
 <style>
   button {
-    background-color: var(--window-background);
+    background-color: var(--color-window-bg);
     border: 2px solid;
-    border-color: var(--light-border-color) var(--shadow-border-color) var(--shadow-border-color) var(--light-border-color);
+    border-color: var(--color-border-light) var(--color-border-dark) var(--color-border-dark) var(--color-border-light);
     min-width: 28px;
     height: 28px;
     font-weight: 600;
@@ -16,7 +16,7 @@
   }
 
   button:active {
-    border-color: var(--shadow-border-color) var(--light-border-color) var(--light-border-color) var(--shadow-border-color);
+    border-color: var(--color-border-dark) var(--color-border-light) var(--color-border-light) var(--color-border-dark);
   }
 
   span {
