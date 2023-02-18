@@ -1,17 +1,20 @@
-export const APP_NAME = 'Not Really Rich Text Editor'
+// Welcome to the not-so-rich text editor
+
+export const APP_NAME = 'The Not-So-Rich Text Editor'
 
 export const WELCOME_MESSAGE = `# Welcome to ${APP_NAME}
 
-We're happy to introduce you our poor programmed and outdated looking markdown (ha-ha) editor!
+We are happy to introduce you our poorly coded and visually outdated markdown (ha-ha) editor!
 
 It can:
 1. Do lists (ordered and unordered).
-2. Do simple markup, like *this*, __that__ and even ***both of them***.
+2. Do simple markup, like *this*, __that__ and even ***both***.
 
 It cannot:
-- Escape markdown special characters.
-- Provide nested lists.
-- Deal with broken Markdown.
+- Do nested lists.
+- Escape special markdown characters.
+
+Enjoy!
 
 _Yours sincerely, Nikolay_
 _i@mr-ozio.ru_
