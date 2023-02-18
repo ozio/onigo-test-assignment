@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import Icon from './Icon.svelte'
 
-  export let title
+  export let title: string
 </script>
 
 <div class="window">

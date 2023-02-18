@@ -1,4 +1,4 @@
-import './styles.mjs'
+import './styles.ts'
 import './styles.css'
 import App from './App.svelte'
 

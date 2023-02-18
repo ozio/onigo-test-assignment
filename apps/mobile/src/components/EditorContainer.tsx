@@ -1,13 +1,19 @@
-import { StyleSheet, View } from 'react-native'
+import { ReactNode } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { colors } from 'ui/theme'
 
-export const EditorContainer = ({ children, style = {} }) => {
+interface EditorContainerProps {
+  children: ReactNode
+  style?: StyleProp<ViewStyle>
+}
+
+export const EditorContainer = ({ children, style }: EditorContainerProps) => {
   return (
     <View
-      style={{
-        ...styles.container,
-        ...style,
-      }}
+      style={[
+        styles.container,
+        style,
+      ]}
     >
       {children}
     </View>

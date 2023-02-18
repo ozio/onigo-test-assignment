@@ -1,13 +1,13 @@
 import { View, StyleSheet } from 'react-native'
+import { ReactNode } from 'react'
 
-export const Toolbar = ({ children, style = {} }) => {
+interface ToolbarProps {
+  children: ReactNode
+}
+
+export const Toolbar = ({ children }: ToolbarProps) => {
   return (
-    <View
-      style={{
-        ...styles.toolbar,
-        ...style,
-      }}
-    >
+    <View style={styles.toolbar}>
       {children}
     </View>
   )

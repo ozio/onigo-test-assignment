@@ -2,7 +2,7 @@ import { ImageBackground, StyleSheet } from 'react-native'
 import { useKeepAwake } from 'expo-keep-awake'
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
 import { colors } from 'ui/theme'
-import { welcomeMessage } from 'editor/config'
+import { WELCOME_MESSAGE } from 'editor/globals'
 import { Editor } from './components/Editor'
 import Image from '../assets/clouds.png'
 
@@ -13,7 +13,7 @@ export default function App() {
     <SafeAreaProvider>
       <ImageBackground source={Image} style={styles.container}>
         <SafeAreaView style={styles.safeView}>
-          <Editor welcomeMessage={welcomeMessage} />
+          <Editor welcomeMessage={WELCOME_MESSAGE} />
         </SafeAreaView>
       </ImageBackground>
     </SafeAreaProvider>

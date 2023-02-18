@@ -1,5 +1,20 @@
-const inline2tokens = (input) => {
-  const tokens = []
+import { AST, ASTNode } from './types'
+
+type TextToken = {
+  type: 'Text'
+  value?: string
+}
+
+type BlockToken = {
+  type: 'Bold' | 'Italic' | 'BoldItalic'
+  state?: 'open' | 'close'
+  children?: Token[]
+}
+
+type Token = TextToken | BlockToken
+
+const inline2tokens = (input: string): Token[] => {
+  const tokens: Token[] = []
   const stack = []
   let currentIndex = 0
   let buffer = ''
@@ -66,19 +81,19 @@ const inline2tokens = (input) => {
   return tokens
 }
 
-const tokens2ast = (tokens) => {
+const tokens2ast = (tokens: Token[]) => {
   const stack = []
 
-  let root = { children: [] }
+  let root: AST = { type: 'Root', children: [] }
   stack.push(root)
 
   for (const token of tokens) {
     const currentNode = stack[stack.length - 1]
-    if (token.state === 'open') {
-      const newNode = { type: token.type, children: [] }
+    if ((token as BlockToken).state === 'open') {
+      const newNode: Token = { type: token.type, children: [] }
       currentNode.children.push(newNode)
       stack.push(newNode)
-    } else if (token.state === 'close') {
+    } else if ((token as BlockToken).state === 'close') {
       stack.pop()
     } else {
       currentNode.children.push(token)
@@ -93,8 +108,8 @@ const inline = (string) => tokens2ast(inline2tokens(string)).children
 const LISTS_REGEX = /^( *)(([*\-+] (?<unordered>.*))|(\d+. (?<ordered>.*)))/
 const INLINE_HEADING_REGEX = /^(#{1,6}) (.*)/
 
-export const md2ast = (markdown = '') => {
-  const ast = { type: 'Root', children: [] }
+export const md2ast = (markdown = ''): AST => {
+  const ast: AST = { type: 'Root', children: [] }
 
   let newBlock = true
   let inList = false
@@ -106,9 +121,9 @@ export const md2ast = (markdown = '') => {
     inList = false
   }
 
-  const addToLastNode = (children) => {
-    let nodes = ast.children
-    let idx = nodes.length - 1
+  const addToLastNode = (children: ASTNode[]) => {
+    const nodes = ast.children
+    const idx = nodes.length - 1
 
     nodes[idx].children = [...nodes[idx].children, ...children]
   }

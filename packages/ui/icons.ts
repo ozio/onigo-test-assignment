@@ -7,4 +7,14 @@ import OrderedList from './assets/icons/ordered-list.gif'
 import Paragraph from './assets/icons/paragraph.gif'
 import UnorderedList from './assets/icons/unordered-list.gif'
 
-export { App, Bold, Copy, HorizontalLine, Italic, OrderedList, Paragraph, UnorderedList }
+type IconName = 
+  'App'
+  | 'Bold'
+  | 'Copy'
+  | 'HorizontalLine'
+  | 'Italic'
+  | 'OrderedList'
+  | 'Paragraph'
+  | 'UnorderedList' 
+
+export { IconName, App, Bold, Copy, HorizontalLine, Italic, OrderedList, Paragraph, UnorderedList }

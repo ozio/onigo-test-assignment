@@ -1,23 +1,6 @@
-export const title = 'Not Really Rich Text Editor'
+import { EditorToolbarElement } from './types'
 
-export const welcomeMessage = `# Welcome to ${title}
-
-We're happy to introduce you our poor programmed and outdated looking markdown (ha-ha) editor!
-
-It can:
-1. Do lists (ordered and unordered).
-2. Do simple markup, like *this*, __that__ and even ***both of them***.
-
-It cannot:
-- Escape markdown special characters.
-- Provide nested lists.
-- Deal with broken Markdown.
-
-_Yours sincerely, Nikolay_
-_i@mr-ozio.ru_
-`
-
-export const layout = [
+const layout: EditorToolbarElement[] = [
   {
     type: 'button',
     icon: 'Bold',
@@ -91,3 +74,5 @@ export const layout = [
     label: null,
   },
 ]
+
+export default layout

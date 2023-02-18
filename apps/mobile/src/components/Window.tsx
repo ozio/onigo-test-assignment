@@ -1,13 +1,20 @@
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import { colors } from 'ui/theme'
 import { Icon } from './Icon'
+import { ReactNode } from 'react'
 
-export const Window = ({ title, children, style = {} }) => {
+interface WindowProps {
+  title: string
+  children: ReactNode
+  style?: StyleProp<ViewStyle>
+}
+
+export const Window = ({ title, children, style }: WindowProps) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={{ ...styles.window, ...style }}>
+      <View style={[styles.window, style]}>
         <View style={styles.heading}>
           <Icon style={styles.icon} name="App" size={16} />
           <Text style={styles.title}>{title}</Text>

@@ -1,3 +1,5 @@
+import { AST } from './types'
+
 const escape = (rawString) => {
   return rawString
 
@@ -15,7 +17,7 @@ const escape = (rawString) => {
   return string
 }
 
-export const ast2md = (ast) => {
+export const ast2md = (ast: AST): string => {
   let md = ''
 
   const processNode = (node, depth = 1) => {

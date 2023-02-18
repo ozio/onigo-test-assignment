@@ -1,5 +1,5 @@
 import { fixtures } from './fixtures'
-import { ast2md } from '..'
+import { ast2md } from '../index'
 
 describe('AST to Markdown', () => {
   fixtures.forEach(({ name, ast, markdown }) => {

@@ -1,3 +1,5 @@
+import { AST, ASTNodeType, HTMLTag } from './types'
+
 const deepRemoveAttribute = (obj, attribute) => {
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -12,7 +14,7 @@ const deepRemoveAttribute = (obj, attribute) => {
   return obj
 }
 
-const typeByTag = {
+const typeByTag: Record<HTMLTag, ASTNodeType> = {
   'h1': 'Heading-1',
   'h2': 'Heading-2',
   'h3': 'Heading-3',
@@ -31,7 +33,7 @@ const typeByTag = {
 
 const selfClosingTags = ['hr', 'br']
 
-export const html2ast = (rawHTML) => {
+export const html2ast = (rawHTML: string): AST => {
   const html = rawHTML.replace(/(\r\n|\n|\r|\t|\s{2,})/gm, '')
 
   const root = {
@@ -60,6 +62,7 @@ export const html2ast = (rawHTML) => {
       const tag = html.slice(i + 1, j)
 
       if (tag[0] === '/') {
+        // @ts-ignore
         currentNode = currentNode.parent
       } else {
         const newNode = {

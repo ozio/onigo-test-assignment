@@ -1,4 +1,7 @@
-const tagByType = {
+import { ASTNode, ASTNodeType, HTMLTag } from './types'
+
+const tagByType: Record<ASTNodeType, HTMLTag> = {
+  'Root': null,
   'Heading-1': 'h1',
   'Heading-2': 'h2',
   'Heading-3': 'h3',
@@ -15,7 +18,7 @@ const tagByType = {
   'LineBreak': 'br',
 }
 
-export const ast2html = (node) => {
+export const ast2html = (node: ASTNode): string => {
   if (node.type === 'Text') {
     return node.value.replace(/ {2}/g, '&nbsp;&nbsp;')
   }

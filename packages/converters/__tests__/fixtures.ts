@@ -1,4 +1,13 @@
-const empty = {
+import { AST } from '../types'
+
+interface Fixture {
+  name: string;
+  html: string;
+  markdown: string;
+  ast: AST;
+}
+
+const empty: Fixture = {
   name: 'Empty tree',
   html: '',
   markdown: '',
@@ -8,7 +17,7 @@ const empty = {
   },
 }
 
-const flatUnorderedList = {
+const flatUnorderedList: Fixture = {
   name: 'Flat lists [1]',
   html: '<ul><li>Item 1</li><li>Item 2</li></ul>',
   markdown: '- Item 1\n- Item 2',
@@ -42,7 +51,7 @@ const flatUnorderedList = {
   },
 }
 
-const flatOrderedList = {
+const flatOrderedList: Fixture = {
   name: 'Flat lists [2]',
   html: '<ol><li>Item 1</li><li>Item 2</li></ol>',
   markdown: '1. Item 1\n2. Item 2',
@@ -76,7 +85,7 @@ const flatOrderedList = {
   },
 }
 
-const multiLineHeader1 = {
+const multiLineHeader1: Fixture = {
   name: 'Miltiline header [1]',
   html: '<h1>Title</h1>',
   markdown: 'Title\n=====',
@@ -96,7 +105,7 @@ const multiLineHeader1 = {
   },
 }
 
-const multiLineHeader2 = {
+const multiLineHeader2: Fixture = {
   name: 'Miltiline header [2]',
   html: '<h2>Title</h2>',
   markdown: 'Title\n-',
@@ -116,7 +125,7 @@ const multiLineHeader2 = {
   },
 }
 
-const inlineHeader = {
+const inlineHeader: Fixture = {
   name: 'Inline header',
   html: '<h3>Another title</h3>',
   markdown: '### Another title',
@@ -136,7 +145,7 @@ const inlineHeader = {
   },
 }
 
-const paragraphs = {
+const paragraphs: Fixture = {
   name: 'Paragraphs',
   html: '<p>Paragraph 1</p><p>Paragraph 2</p><p>Paragraph 3</p>',
   markdown: 'Paragraph 1\n\nParagraph 2\n\nParagraph 3',
@@ -174,7 +183,7 @@ const paragraphs = {
   },
 }
 
-const linebreaks = {
+const linebreaks: Fixture = {
   name: 'Linebreaks',
   html: '<p>Lorem ipsum<br>dolor sit amet</p>',
   markdown: 'Lorem ipsum\ndolor sit amet',
@@ -201,7 +210,7 @@ const linebreaks = {
   },
 }
 
-const string = {
+const string: Fixture = {
   name: 'Simle string',
   html: '<p>Lorem ipsum dolor sit amet</p>',
   markdown: 'Lorem ipsum dolor sit amet',
@@ -221,7 +230,7 @@ const string = {
   },
 }
 
-const boldItalicString1 = {
+const boldItalicString1: Fixture = {
   name: 'Inline markup [1]',
   html: '<p>Lorem <i>ipsum</i> dolor <b>sit amet</b></p>',
   markdown: 'Lorem _ipsum_ dolor **sit amet**',
@@ -263,7 +272,7 @@ const boldItalicString1 = {
   },
 }
 
-const boldItalicString2 = {
+const boldItalicString2: Fixture = {
   name: 'Inline markup [2]',
   html: '<p><b>Lorem ipsum <i>dolor sit</i> amet</b></p>',
   markdown: '**Lorem ipsum _dolor sit_ amet**',
@@ -301,7 +310,7 @@ const boldItalicString2 = {
   },
 }
 
-const boldItalicString3 = {
+const boldItalicString3: Fixture = {
   name: 'Inline markup [3]',
   html: '<p><b><i>Lorem ipsum</i></b> dolor <b><i>sit amet</i></b></p>',
   markdown: '**_Lorem ipsum_** dolor **_sit amet_**',
@@ -349,7 +358,7 @@ const boldItalicString3 = {
   },
 }
 
-const complex1 = {
+const complex1: Fixture = {
   name: 'Complex',
   html: `
 <h1>Inline Title</h1>
@@ -507,7 +516,7 @@ dolor **sit amet**
   },
 }
 
-export const fixtures = [
+export const fixtures: Fixture[] = [
   empty,
   flatUnorderedList,
   flatOrderedList,

@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
   import { onDestroy, onMount } from 'svelte'
-  import { welcomeMessage, layout, title } from 'editor/config'
   import { ast2html, ast2md, html2ast, md2ast } from 'converters'
+  import layout from 'editor/toolbar'
+  import { APP_NAME, WELCOME_MESSAGE } from 'editor/globals'
   import Button from './components/Button.svelte'
   import Toolbar from './components/Toolbar.svelte'
   import Window from './components/Window.svelte'
@@ -9,24 +10,26 @@
   import EditorContainer from './components/EditorContainer.svelte'
   import Icon from './components/Icon.svelte'
   import contenteditable from 'editor/contenteditable.html?raw'
+  import type { EditorAction, MessageFromEditor, MessageToEditor } from 'editor/types'
+  import type { KeyboardEventHandler } from 'svelte/elements'
 
   let iframe
-  let markdown = welcomeMessage
+  let markdown = WELCOME_MESSAGE
 
-  const emit = (name) => {
+  const emit = (name: EditorAction) => {
     if (name === 'copy') {
       navigator.clipboard.writeText(markdown)
       return
     }
 
-    iframe.contentWindow.postMessage(JSON.stringify({ type: 'action', value: name }))
+    iframe.contentWindow.postMessage(JSON.stringify({ type: 'action', value: name } as MessageToEditor))
   }
 
   const handleReceivedMessage = (event) => {
     let message
 
     try {
-      message = JSON.parse(event.data)
+      message = JSON.parse(event.data) as MessageFromEditor
     } catch (e) {
       return
     }
@@ -52,11 +55,11 @@
     const ast = md2ast(text)
     const html = ast2html(ast)
 
-    iframe.contentWindow.postMessage(JSON.stringify({ type: 'setHTML', value: html }))
+    iframe.contentWindow.postMessage(JSON.stringify({ type: 'setHTML', value: html } as MessageToEditor))
   }
 
-  const onChangeMarkdown = (event) => {
-    markdown = event.target.value
+  const onChangeMarkdown: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
+    markdown = event.currentTarget.value
     convertAndSend(markdown)
   }
 
@@ -70,7 +73,7 @@
   })
 </script>
 
-<Window title={title}>
+<Window title={APP_NAME}>
   <Toolbar>
     {#each layout as { type, icon, label, action }, idx}
       {#if type === 'separator'}
@@ -91,7 +94,7 @@
     <EditorContainer>
       <iframe
         bind:this={iframe}
-        title={title}
+        title={APP_NAME}
         srcdoc={contenteditable}
       ></iframe>
     </EditorContainer>
