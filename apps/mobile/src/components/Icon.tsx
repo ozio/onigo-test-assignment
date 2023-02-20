@@ -1,8 +1,8 @@
 import { Image, ImageStyle, StyleProp } from 'react-native'
-import * as icons from 'ui/icons'
+import { icons, IconName } from 'ui/icons'
 
 export interface IconProps {
-  name: icons.IconName
+  name: IconName
   size?: number
   style?: StyleProp<ImageStyle>
 }

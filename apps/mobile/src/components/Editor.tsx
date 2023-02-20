@@ -1,12 +1,10 @@
-import { useCallback, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { StyleSheet, TextInput, Platform, Dimensions } from 'react-native'
 import WebView, { WebViewMessageEvent } from 'react-native-webview'
 import * as Clipboard from 'expo-clipboard'
-import { ast2html, ast2md, html2ast, md2ast } from 'converters'
-import { colors } from 'ui/theme'
 import { APP_NAME } from 'editor/globals'
-import { EditorAction, MessageFromEditor, MessageToEditor } from 'editor/types'
-import toolbarLayout from 'editor/toolbar'
+import { type EditorAction, type MessageFromEditor, toolbar, useEditor } from 'editor'
+import { colors } from 'ui/theme'
 import { Window } from './Window'
 import { Toolbar } from './Toolbar'
 import { Button } from './Button'
@@ -21,48 +19,35 @@ import { EditorContainer } from './EditorContainer'
 import html from '../../../../packages/editor/contenteditable.html'
 
 interface EditorProps {
-  welcomeMessage: string
+  initialMarkdown: string
 }
 
-export const Editor = ({ welcomeMessage = '' }: EditorProps) => {
+export const Editor = ({ initialMarkdown }: EditorProps) => {
   const ref = useRef(null)
   const [markdown, setMarkdown] = useState('')
 
-  const handleReceiveMessage = useCallback((event: WebViewMessageEvent) => {
-    const data = JSON.parse(event.nativeEvent.data) as MessageFromEditor
+  const {
+    onReceiveMessage,
+    sendMarkdown,
+    sendAction,
+  } = useMemo(() => useEditor({
+    editor: () => ref.current,
+    setMarkdown,
+    initialMarkdown,
+  }), [setMarkdown, initialMarkdown, ref.current])
 
-    switch (data.type) {
-      case 'input':
-      case 'paste':
-        const ast = html2ast(data.value)
-        const md = ast2md(ast)
-
-        setMarkdown(md)
-        break
-
-      case 'ready':
-        convertAndSend(welcomeMessage)
-        break
-    }
-  }, [])
-
-  const convertAndSend = useCallback((text: string) => {
-    setMarkdown(text)
-
-    const ast = md2ast(text)
-    const html = ast2html(ast)
-
-    ref.current.postMessage(JSON.stringify({ type: 'setHTML', value: html } as MessageToEditor))
-  }, [])
-
-  const action = useCallback((name: EditorAction) => {
+  const action = (name: EditorAction) => {
     if (name === 'copy') {
       Clipboard.setStringAsync(markdown)
       return
     }
 
-    ref.current.postMessage(JSON.stringify({ type: 'action', value: name } as MessageToEditor))
-  }, [markdown])
+    sendAction(name)
+  }
+
+  const handleReceiveMessage = (event: WebViewMessageEvent) => {
+    onReceiveMessage(event.nativeEvent.data)
+  }
 
   return (
     <Window
@@ -70,11 +55,7 @@ export const Editor = ({ welcomeMessage = '' }: EditorProps) => {
       title={APP_NAME}
     >
       <Toolbar>
-        {toolbarLayout.map((item, idx) => {
-          // Using index as a key is a bad practice in general,
-          // but this is not that case, because we're using package
-          // configuration file which will never be changed during
-          // user and interface interaction.
+        {toolbar.map((item, idx) => {
           if (item.type === 'separator') return <Separator key={idx} />
 
           return (
@@ -89,7 +70,7 @@ export const Editor = ({ welcomeMessage = '' }: EditorProps) => {
           ref={ref}
           source={{ html }}
           onMessage={handleReceiveMessage}
-          injectedJavaScript={`window.postMessage('${({ type: 'ready' }) as MessageFromEditor}')`}
+          injectedJavaScript={`window.postMessage('${JSON.stringify({ type: 'ready' } as MessageFromEditor)}')`}
           scalesPageToFit={false}
         />
       </EditorContainer>
@@ -97,7 +78,7 @@ export const Editor = ({ welcomeMessage = '' }: EditorProps) => {
         <TextInput
           style={styles.input}
           value={markdown}
-          onChangeText={convertAndSend}
+          onChangeText={sendMarkdown}
           multiline
         />
       </EditorContainer>

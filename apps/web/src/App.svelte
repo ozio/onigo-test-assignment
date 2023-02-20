@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte'
-  import { ast2html, ast2md, html2ast, md2ast } from 'converters'
-  import layout from 'editor/toolbar'
+  import { useEditor, toolbar, type EditorAction } from 'editor'
   import { APP_NAME, WELCOME_MESSAGE } from 'editor/globals'
   import Button from './components/Button.svelte'
   import Toolbar from './components/Toolbar.svelte'
@@ -10,11 +9,20 @@
   import EditorContainer from './components/EditorContainer.svelte'
   import Icon from './components/Icon.svelte'
   import contenteditable from 'editor/contenteditable.html?raw'
-  import type { EditorAction, MessageFromEditor, MessageToEditor } from 'editor/types'
   import type { KeyboardEventHandler } from 'svelte/elements'
 
   let iframe
   let markdown = WELCOME_MESSAGE
+
+  const {
+    onReceiveMessage,
+    sendMarkdown,
+    sendAction,
+  } = useEditor({
+    editor: () => iframe.contentWindow,
+    initialMarkdown: WELCOME_MESSAGE,
+    setMarkdown: (val) => markdown = val,
+  })
 
   const emit = (name: EditorAction) => {
     if (name === 'copy') {
@@ -22,50 +30,20 @@
       return
     }
 
-    iframe.contentWindow.postMessage(JSON.stringify({ type: 'action', value: name } as MessageToEditor))
+    sendAction(name)
   }
 
   const handleReceivedMessage = (event) => {
-    let message
-
-    try {
-      message = JSON.parse(event.data) as MessageFromEditor
-    } catch (e) {
-      return
-    }
-
-    switch (message.type) {
-      case 'input':
-      case 'paste':
-        const ast = html2ast(message.value)
-        const md = ast2md(ast)
-
-        markdown = md
-        break
-
-      case 'ready':
-        convertAndSend(markdown)
-        break
-    }
+    onReceiveMessage(event.data)
   }
 
-  const convertAndSend = (text) => {
-    markdown = text
-
-    const ast = md2ast(text)
-    const html = ast2html(ast)
-
-    iframe.contentWindow.postMessage(JSON.stringify({ type: 'setHTML', value: html } as MessageToEditor))
-  }
-
-  const onChangeMarkdown: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
+  const handleChangeMarkdown: KeyboardEventHandler<HTMLTextAreaElement> = (event) => {
     markdown = event.currentTarget.value
-    convertAndSend(markdown)
+    sendMarkdown(markdown)
   }
 
   onMount(() => {
     window.addEventListener('message', handleReceivedMessage)
-    convertAndSend(markdown)
   })
 
   onDestroy(() => {
@@ -75,7 +53,7 @@
 
 <Window title={APP_NAME}>
   <Toolbar>
-    {#each layout as { type, icon, label, action }, idx}
+    {#each toolbar as { type, icon, label, action }, idx}
       {#if type === 'separator'}
         <Separator />
       {:else if type === 'button'}
@@ -99,7 +77,7 @@
       ></iframe>
     </EditorContainer>
     <EditorContainer>
-      <textarea on:input={onChangeMarkdown}>{markdown}</textarea>
+      <textarea on:input={handleChangeMarkdown}>{markdown}</textarea>
     </EditorContainer>
   </div>
 </Window>

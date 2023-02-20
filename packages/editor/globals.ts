@@ -1,5 +1,3 @@
-// Welcome to the not-so-rich text editor
-
 export const APP_NAME = 'The Not-So-Rich Text Editor'
 
 export const WELCOME_MESSAGE = `# Welcome to ${APP_NAME}

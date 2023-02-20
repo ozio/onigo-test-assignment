@@ -13,7 +13,7 @@ export default function App() {
     <SafeAreaProvider>
       <ImageBackground source={Image} style={styles.container}>
         <SafeAreaView style={styles.safeView}>
-          <Editor welcomeMessage={WELCOME_MESSAGE} />
+          <Editor initialMarkdown={WELCOME_MESSAGE} />
         </SafeAreaView>
       </ImageBackground>
     </SafeAreaProvider>

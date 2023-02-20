@@ -7,6 +7,13 @@ const gray2 = '#c0c0c0'
 const gray3 = '#434343'
 
 export const colors = {
+  primary,
+  secondary,
+  cyan,
+  blue,
+  gray1,
+  gray2,
+  gray3,
   font: secondary,
   mainBg: cyan,
   windowBg: gray2,

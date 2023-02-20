@@ -7,14 +7,5 @@ import OrderedList from './assets/icons/ordered-list.gif'
 import Paragraph from './assets/icons/paragraph.gif'
 import UnorderedList from './assets/icons/unordered-list.gif'
 
-type IconName = 
-  'App'
-  | 'Bold'
-  | 'Copy'
-  | 'HorizontalLine'
-  | 'Italic'
-  | 'OrderedList'
-  | 'Paragraph'
-  | 'UnorderedList' 
-
-export { IconName, App, Bold, Copy, HorizontalLine, Italic, OrderedList, Paragraph, UnorderedList }
+export type IconName = 'App' | 'Bold' | 'Copy' | 'HorizontalLine' | 'Italic' | 'OrderedList' | 'Paragraph' | 'UnorderedList'
+export const icons = { App, Bold, Copy, HorizontalLine, Italic, OrderedList, Paragraph, UnorderedList }

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import * as icons from 'ui/icons'
+  import { icons, type IconName } from 'ui/icons'
 
-  export let name: icons.IconName
+  export let name: IconName
   export let size = 25
 </script>
 

@@ -1,5 +1,5 @@
-import { View, StyleSheet } from 'react-native'
 import { ReactNode } from 'react'
+import { View, StyleSheet } from 'react-native'
 
 interface ToolbarProps {
   children: ReactNode
